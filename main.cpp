@@ -48,11 +48,14 @@ void stopWaiting() {
 MAIN_FUNC {
   Epine::Client epineClient;
 
-  epineClient.init([&](){
+  auto on_init_callback = [](){
     HIGHLIGHT("Client is ready");
 
     stopWaiting();
-  });
+  };
+  epineClient.set_on_init_callback(on_init_callback);
+
+  epineClient.init();
 
   wait();
 
