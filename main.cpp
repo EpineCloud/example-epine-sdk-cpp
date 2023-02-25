@@ -64,7 +64,7 @@ MAIN_FUNC {
 
     stopWaiting();
   });
-  std::string uri = epineClient.auth->wallet->connect();
+  std::string uri = epineClient.auth->wallet->connect(Epine::Constants::Chains::Type::EVM);
 
   wait();
 
