@@ -59,8 +59,10 @@ MAIN_FUNC {
 
   wait();
 
-  epineClient.auth->wallet->on(Epine::Auth::Wallet::Event::CONNECTED, [&](){
+  epineClient.auth->wallet->on(Epine::Auth::Wallet::Event::CONNECTED, [&](std::string addresses[]){
     HIGHLIGHT("CONNECTED CALLBACK");
+
+    HIGHLIGHT("Connected address #0: " + addresses[0]);
 
     stopWaiting();
   });
