@@ -46,8 +46,10 @@ void stopWaiting() {
 }
 
 MAIN_FUNC {
+  // Define Epine Client
   Epine::Client epineClient;
 
+  // Set init callback
   auto on_init_callback = [](){
     HIGHLIGHT("Client is ready");
 
@@ -55,10 +57,20 @@ MAIN_FUNC {
   };
   epineClient.set_on_init_callback(on_init_callback);
 
+  // Call init
   epineClient.init();
 
   wait();
 
+  // Get wallet balance
+  std::string balanceJSON = epineClient.tokens->getAddressBalance(
+    "vitalik.eth",
+    Epine::Constants::Chains::Type::EVM,
+    Epine::Constants::Chains::ID::EVM_ETHEREUM
+  );
+  HIGHLIGHT("Wallet balance JSON: " + balanceJSON);
+
+  // Set wallet connection callback
   epineClient.auth->wallet->on(Epine::Auth::Wallet::Event::CONNECTED, [&](std::string addresses[]){
     HIGHLIGHT("CONNECTED CALLBACK");
 
@@ -66,7 +78,10 @@ MAIN_FUNC {
 
     stopWaiting();
   });
+
+  // Request wallet connection
   std::string uri = epineClient.auth->wallet->connect(Epine::Constants::Chains::Type::EVM);
+  HIGHLIGHT("Received URI: " + uri);
 
   wait();
 
