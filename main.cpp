@@ -63,12 +63,12 @@ MAIN_FUNC {
   wait();
 
   // Get wallet balance
-  std::string balanceJSON = epineClient.tokens->getAddressBalance(
+  std::vector<Epine::Tokens::Token> tokens = epineClient.tokens->getAddressBalance(
     "vitalik.eth",
     Epine::Constants::Chains::Type::EVM,
     Epine::Constants::Chains::ID::EVM_ETHEREUM
   );
-  HIGHLIGHT("Wallet balance JSON: " + balanceJSON);
+  HIGHLIGHT("Wallet balance: " + std::to_string(tokens[0].balance) + " " + tokens[0].symbol);
 
   // Set wallet connection callback
   epineClient.auth->wallet->on(Epine::Auth::Wallet::Event::CONNECTED, [&](std::string addresses[]){
