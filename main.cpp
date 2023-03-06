@@ -71,7 +71,7 @@ MAIN_FUNC {
   HIGHLIGHT("Wallet balance: " + std::to_string(tokens[0].balance) + " " + tokens[0].symbol);
 
   // Set wallet connection callback
-  epineClient.auth->wallet->on(Epine::Auth::Wallet::Event::CONNECTED, [&](std::string addresses[]){
+  epineClient.auth->wallet->on(Epine::Auth::Wallet::Event::CONNECTED, [&](std::vector<std::string> addresses){
     HIGHLIGHT("CONNECTED CALLBACK");
 
     HIGHLIGHT("Connected address #0: " + addresses[0]);
